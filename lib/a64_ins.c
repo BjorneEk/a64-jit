@@ -17,12 +17,35 @@ static a64_t a64_uncond_branch(i32_t imm)
 }
 
 
-a64_t a64_branch(a64_cond_t cond, i32_t imm)
+a64_t a64_b(a64_cond_t cond, i32_t imm)
 {
 	if (cond == B)
 		return a64_uncond_branch(imm);
 	return (0b01010100 << 24) | (imm & 0b1111111111111111111) << 5 | (cond & 0xF);
 }
+
+a64_t a64_bl(a64_t imm)
+{
+	return (1 << 31) | a64_uncond_branch(imm);
+}
+
+a64_t a64_bli(a64_t imm)
+{
+	const a64_t imask	= 0b10010100000000000000000000000000;
+	if (imm & 0b111111 << 26) {
+		fprintf(stderr, "%li: immidiate value out of range +/-128MB\n", (long)imm);
+		exit(-1);
+	}
+	return imask | imm;
+}
+
+a64_t a64_blr(a64_reg_t r)
+{
+	const a64_t imask	= 0b11010110001111110000000000000000;
+
+	return imask | (r << 5);
+}
+
 
 static a64_t a64_imm(i32_t imm)
 {
@@ -228,21 +251,6 @@ a64_t a64_cmpw(a64_reg_t r1, a64_reg_t r2)
 	return a64_subsw(0x1F, r1, r2);
 }
 
-a64_t a64_bli(a64_t imm)
-{
-	const a64_t imask	= 0b10010100000000000000000000000000;
-	if (imm & 0b111111 << 26) {
-		fprintf(stderr, "%li: immidiate value out of range +/-128MB\n", (long)imm);
-		exit(-1);
-	}
-	return imask | imm;
-}
-a64_t a64_blr(a64_reg_t r)
-{
-	const a64_t imask	= 0b11010110001111110000000000000000;
-
-	return imask | (r << 5);
-}
 
 
 

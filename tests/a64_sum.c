@@ -45,8 +45,8 @@ int main(int argc, const char *argv[])
 	a64_jit_push(&jit, a64_add(R2, R2, R3));
 	a64_jit_push(&jit, a64_addi(R0, R0, 8));
 	a64_jit_push(&jit, a64_cmp(R0, R1));
-	a64_jit_push(&jit, a64_branch(EQ, 2));
-	a64_jit_push(&jit, a64_branch(B, -5));
+	a64_jit_push(&jit, a64_b(EQ, 2));
+	a64_jit_push(&jit, a64_b(B, -5));
 	a64_jit_push(&jit, a64_mov(R0, R2));
 	a64_jit_push(&jit, a64_ret());
 
