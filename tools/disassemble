@@ -20,8 +20,8 @@ EOF
 
 	$LLVM_MC -triple arm64-apple-macos -filetype=obj "$wrapped" -o "$output"
 
-	$LLVM_OBJDUMP --macho --arch=arm64 --disassemble "$output" | awk "/$bn/ {flag=1} flag"
-
+	#$LLVM_OBJDUMP --macho --arch=arm64 --disassemble "$output" | awk "/$bn/ {flag=1} flag"
+	objdump -d --disassemble "$output" | awk "/$bn/ {flag=1} flag"
 	rm -f "$output" "$wrapped"
 }
 

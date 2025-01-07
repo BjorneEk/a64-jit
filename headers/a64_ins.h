@@ -142,4 +142,22 @@ a64_t a64_load_store(
 
 static inline a64_t a64_ret(void) { return 0xd65f03c0; }
 static inline a64_t a64_nop(void) { return 0xd503201f; }
+
+
+typedef enum a64_simd_sz {
+	SIMD_B = 0,
+	SIMD_H = 1,
+	SIMD_S = 2,
+	SIMD_D = 3
+} a64_simd_sz_t;
+
+typedef enum a64_simd_q {
+	SIMD_HALF = 0,
+	SIMD_FULL = 1
+} a64_simd_q_t;
+
+
+
+a64_t a64_simd_ld1(a64_simd_sz_t size, a64_simd_q_t q, u32_t cnt, a64_reg_t dst, a64_reg_t addr);
+
 #endif /* _A64_INSTRUCTIONS_H_ */

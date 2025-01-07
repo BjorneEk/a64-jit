@@ -171,7 +171,13 @@ enum {
 	H,
 	BY
 };
+/*
+and
+orr
+eor
+mvn
 
+*/
 a64_t a64_add_sub(a64_t ins, u32_t sz, u32_t op, u32_t flags, a64_reg_t dst, a64_reg_t s1, a64_reg_t s2)
 {
 	return (sz << 31) | (op << 30) | (flags << 29) | dst | (s1 << 5) | (s2 << 16) | ins;
@@ -423,76 +429,11 @@ a64_t a64_load_store(
 		(addr << 5) |
 		dst;
 }
-/*
-a64_t a64_ldrs(
-	a64_addressing_mode_t	mode,
-	a64_sz_t			sz,
-	a64_reg_t			dst,
-	a64_reg_t			addr,
-	i64_t imm)
+
+
+a64_t a64_simd_ld1(a64_simd_sz_t size, a64_simd_q_t q, u32_t cnt, a64_reg_t dst, a64_reg_t addr)
 {
-	a64_t pimm;
-	a64_t simm;
-	a64_t oc;
-
-	if (sz == SZX) {
-		fprintf(stderr, "forbidden size: x%d\n", dst);
-		exit(-1);
-	}
-
-	if (mode == IMM && sz == SZW)
-		oc = 0b00111001100000000000000000000000;
-	else if (mode == IMM)
-		oc = 0b00111001110000000000000000000000;
-	else if (sz == SZW)
-		oc = 0b00111000100000000000000000000000;
-	else
-		oc = 0b00111000110000000000000000000000;
-
-
-	if (mode == IMM) {
-		pimm = imm_addr(sz, imm);
-		return oc |
-			(sz << 30) |
-			(pimm << 10) |
-			(addr << 5) |
-			dst;
-	}
-
-	simm = post_pre_addr(imm);
-	return oc |
-		(sz << 30) |
-		(mode << 10) |
-		(simm << 12) |
-		(addr << 5) |
-		dst;
+	a64_t mask = 0b00001100010000000000000000000000;
+	static const u32_t opcode[] = {7, 10, 6, 2};
+	return (size << 10) | (opcode[cnt - 1] << 12) | (q << 30) | (addr << 5) | dst | mask;
 }
-
-a64_t a64_ldr_(
-	a64_addressing_mode_t	mode,
-	a64_sz_t			sz,
-	a64_reg_t			dst,
-	a64_reg_t			addr,
-	i64_t imm)
-{
-	a64_t pimm;
-	a64_t simm;
-
-	if (mode == IMM) {
-		pimm = imm_addr(sz, imm);
-		return 0b00111001010000000000000000000000 |
-			(sz << 30) |
-			(pimm << 10) |
-			(addr << 5) |
-			dst;
-	}
-
-	simm = post_pre_addr(imm);
-	return 0b00111000010000000000000000000000 |
-		(sz << 30) |
-		(mode << 10) |
-		(simm << 12) |
-		(addr << 5) |
-		dst;
-}
-*/

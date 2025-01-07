@@ -48,7 +48,7 @@ echo "	nop";
 echo "	ret";
 echo "	.cfi_endproc"
 } >> "$tmp"
-
+#cat "$tmp"
 cc -c "$tmp" -o "$tmp_obj" -O0
 
 [ "$OS" == 'Linux' ] && dump=$(objdump --disassemble=_fn "$tmp_obj" | sed -n '/_fn/,$p' | tail -n +2)
@@ -56,7 +56,7 @@ cc -c "$tmp" -o "$tmp_obj" -O0
 
 rm "$tmp_obj"
 rm "$tmp"
-
+#cat "$dump"
 mach_line=$(echo "$dump" | sed -n "${line}p")
 
 hex=$(echo "$mach_line" | awk '{print $2}' | tr 'a-f' 'A-F')
