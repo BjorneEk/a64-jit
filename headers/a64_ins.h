@@ -164,4 +164,8 @@ typedef enum a64_simd_ld1_mode {
 
 //a64_t a64_simd_ld1(a64_simd_sz_t size, a64_simd_q_t q, u32_t cnt, a64_reg_t dst, a64_reg_t addr);
 a64_t a64_simd_ld1(a64_simd_ld1_mode_t mode, a64_simd_sz_t size, a64_simd_q_t q, u32_t cnt, a64_reg_t dst, a64_reg_t addr, ...);
+a64_t a64_simd_and(a64_simd_q_t q, a64_reg_t dst, a64_reg_t s1, a64_reg_t s2);
+a64_t a64_simd_cmeq(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t s1, a64_reg_t s2);
+a64_t a64_simd_umaxv(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t src);
+a64_t a64_simd_uminv(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t src);
 #endif /* _A64_INSTRUCTIONS_H_ */

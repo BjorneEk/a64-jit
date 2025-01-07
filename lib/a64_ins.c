@@ -445,3 +445,27 @@ a64_t a64_simd_ld1(a64_simd_ld1_mode_t mode, a64_simd_sz_t size, a64_simd_q_t q,
 		case LD1_REG: return res | (1 << 23) | ((31 & va_arg(args, a64_reg_t)) << 16);
 	}
 }
+
+a64_t a64_simd_and(a64_simd_q_t q, a64_reg_t dst, a64_reg_t s1, a64_reg_t s2)
+{
+	const a64_t mask = 0b00001110001000000001110000000000;
+	return (q << 30) | (s2 << 16) | (s1 << 5) | dst | mask;
+}
+
+a64_t a64_simd_cmeq(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t s1, a64_reg_t s2)
+{
+	const a64_t mask = 0b00101110001000001000110000000000;
+	return (size << 22) | (q << 30) | (s2 << 16) | (s1 << 5) | dst | mask;
+}
+
+a64_t a64_simd_umaxv(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t src)
+{
+	const a64_t mask = 0b00101110001100001010100000000000;
+	return (size << 22) | (q << 30) | (src << 5) | dst | mask;
+}
+
+a64_t a64_simd_uminv(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t src)
+{
+	const a64_t mask = 0b00101110001100011010100000000000;
+	return (size << 22) | (q << 30) | (src << 5) | dst | mask;
+}
