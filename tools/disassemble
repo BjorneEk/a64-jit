@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 LLVM_MC='/opt/homebrew/opt/llvm/bin/llvm-mc'
-LLVM_OBJDUMP='/opt/homebrew/opt/llvm/bin/llvm-objdump'
+#LLVM_OBJDUMP='/opt/homebrew/opt/llvm/bin/llvm-objdump'
 
 do_darwin() {
 	input="$1"

@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <stdarg.h>
 
 
 
@@ -430,10 +430,18 @@ a64_t a64_load_store(
 		dst;
 }
 
-
-a64_t a64_simd_ld1(a64_simd_sz_t size, a64_simd_q_t q, u32_t cnt, a64_reg_t dst, a64_reg_t addr)
+a64_t a64_simd_ld1(a64_simd_ld1_mode_t mode, a64_simd_sz_t size, a64_simd_q_t q, u32_t cnt, a64_reg_t dst, a64_reg_t addr, ...)
 {
-	a64_t mask = 0b00001100010000000000000000000000;
-	static const u32_t opcode[] = {7, 10, 6, 2};
-	return (size << 10) | (opcode[cnt - 1] << 12) | (q << 30) | (addr << 5) | dst | mask;
+	const u32_t opcode[] = {7, 10, 6, 2};
+	const a64_t mask = 0b00001100010000000000000000000000;
+	a64_t res;
+	va_list args;
+	va_start(args, addr);
+
+	res = (size << 10) | (opcode[cnt - 1] << 12) | (q << 30) | (addr << 5) | dst | mask;
+	switch (mode) {
+		case LD1_NONE: return res;
+		case LD1_IMM: return res | (1 << 23) | (31 << 16);
+		case LD1_REG: return res | (1 << 23) | ((31 & va_arg(args, a64_reg_t)) << 16);
+	}
 }
