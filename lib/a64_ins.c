@@ -430,6 +430,11 @@ a64_t a64_load_store(
 		dst;
 }
 
+a64_t a64_brk(u32_t imm16)
+{
+	return 0xD4200000 | (imm16 << 5);
+}
+
 a64_t a64_simd_ld1(a64_simd_ld1_mode_t mode, a64_simd_sz_t size, a64_simd_q_t q, u32_t cnt, a64_reg_t dst, a64_reg_t addr, ...)
 {
 	const u32_t opcode[] = {7, 10, 6, 2};
@@ -442,8 +447,9 @@ a64_t a64_simd_ld1(a64_simd_ld1_mode_t mode, a64_simd_sz_t size, a64_simd_q_t q,
 	switch (mode) {
 		case LD1_NONE: return res;
 		case LD1_IMM: return res | (1 << 23) | (31 << 16);
-		case LD1_REG: return res | (1 << 23) | ((31 & va_arg(args, a64_reg_t)) << 16);
+		default: return res | (1 << 23) | ((31 & va_arg(args, a64_reg_t)) << 16);
 	}
+
 }
 
 a64_t a64_simd_and(a64_simd_q_t q, a64_reg_t dst, a64_reg_t s1, a64_reg_t s2)
@@ -468,4 +474,18 @@ a64_t a64_simd_uminv(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_
 {
 	const a64_t mask = 0b00101110001100011010100000000000;
 	return (size << 22) | (q << 30) | (src << 5) | dst | mask;
+}
+
+a64_t a64_simd_umov(a64_simd_sz_t size, u32_t idx, a64_reg_t dst, a64_reg_t src)
+{
+	a64_t imm5_q;
+	const a64_t mask = 0b00001110000000000011110000000000;
+	switch (size) {
+		case SIMD_B: imm5_q = (1 | (idx << 1)) << 16; break;
+		case SIMD_H: imm5_q = (2 | (idx << 2)) << 16; break;
+		case SIMD_S: imm5_q = (4 | (idx << 3)) << 16; break;
+		case SIMD_D: imm5_q = ((8 | (idx << 4)) << 16) | (1 << 30); break;
+	}
+
+	return (src << 5) | imm5_q | dst | mask;
 }
