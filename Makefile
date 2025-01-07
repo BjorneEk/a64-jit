@@ -57,6 +57,7 @@ $(TEST_BIN)/%: tests/%.c $(LIB_TARGET)
 	@printf " - %-25s <- %s\n" "$@" " $<"
 
 run-tests: $(TESTS)
+	@mkdir -p files
 	@echo "\nRunning tests\n"
 	@pass=0; fail=0; \
 	green='\033[32m'; red='\033[31m'; reset='\033[0m'; \
