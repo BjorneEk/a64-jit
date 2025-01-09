@@ -1,4 +1,4 @@
-LIBNAME:=libjit
+LIBNAME:=a64jit
 BIN:=bin
 BUILD:=build
 
@@ -16,6 +16,11 @@ TEST_SRC:=$(wildcard tests/*.c)
 
 LIB_OBJ:=$(patsubst lib/%.c, $(BUILD)/%.o, $(LIBSRC))
 TESTS:=$(patsubst tests/%.c, $(TEST_BIN)/%, $(TEST_SRC))
+
+UNAME:=$(shell uname -s)
+
+RE_JIT_LIB:=../jit-regex/lib/$(UNAME)
+RE_JIT_INCLUDE:=../jit-regex/include
 
 all: $(LIB_TARGET) Makefile
 
@@ -72,6 +77,18 @@ run-tests: $(TESTS)
 	done; \
 	echo "\nSummary: $${green}$$pass passed$${reset}, $${red}$$fail failed$${reset}";
 
+$(RE_JIT_LIB)/a64jit: $(LIB_OBJ)
+	@mkdir -p $(dir $@)
+
+	$(if $(filter 0,$(MAKELEVEL)), $(if $(filter 0,$(LIB_MSG_PRINTED)),, \
+	$(eval LIB_MSG_PRINTED:=0) \
+	@echo "\nInstalling library"))
+
+	@$(CC) $(CFLAGS) $(LIB_CFLAGS) -shared -o $@ $(LIB_OBJ)
+	@printf " - %-25s <- %s\n" "$@" " $(LIB_OBJ)"
+
+install: $(RE_JIT_LIB)/a64jit $(HEADERS)
+	@cp	$(HEADERS) $(RE_JIT_INCLUDE)
 
 clean:
 	rm -rf $(BIN)

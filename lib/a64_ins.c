@@ -24,6 +24,12 @@ a64_t a64_b(a64_cond_t cond, i32_t imm)
 	return (0b01010100 << 24) | (imm & 0b1111111111111111111) << 5 | (cond & 0xF);
 }
 
+a64_t a64_br(a64_reg_t r)
+{
+	const a64_t imask = 0b11010110000111110000000000000000;
+	return imask | (r << 5);
+}
+
 a64_t a64_bl(a64_t imm)
 {
 	return (1 << 31) | a64_uncond_branch(imm);
