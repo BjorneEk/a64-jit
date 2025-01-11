@@ -171,4 +171,7 @@ a64_t a64_simd_cmeq(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t
 a64_t a64_simd_umaxv(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t src);
 a64_t a64_simd_uminv(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t src);
 a64_t a64_simd_umov(a64_simd_sz_t size, u32_t idx, a64_reg_t dst, a64_reg_t src);
+
+a64_t a64_simd_movi(a64_simd_q_t q, u32_t op, u32_t cmode, u8_t imm, a64_reg_t dst);
+a64_t a64_simd_movib(a64_simd_q_t q, a64_reg_t dst, u8_t imm8);
 #endif /* _A64_INSTRUCTIONS_H_ */
