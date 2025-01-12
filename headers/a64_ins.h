@@ -94,6 +94,10 @@ a64_t a64_b(a64_cond_t cond, i32_t imm);
 //https://developer.arm.com/documentation/ddi0602/2024-09/Base-Instructions/BR--Branch-to-register-?lang=en
 a64_t a64_br(a64_reg_t r);
 
+a64_t a64_cbzw(a64_reg_t r, i32_t imm19);
+a64_t a64_cbz(a64_reg_t r, i32_t imm19);
+a64_t a64_cbnzw(a64_reg_t r, i32_t imm19);
+a64_t a64_cbnz(a64_reg_t r, i32_t imm19);
 //https://developer.arm.com/documentation/ddi0602/2024-09/Base-Instructions/BL--Branch-with-link-?lang=en
 a64_t a64_bl(a64_t imm);
 

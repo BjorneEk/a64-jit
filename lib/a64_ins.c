@@ -24,6 +24,27 @@ a64_t a64_b(a64_cond_t cond, i32_t imm)
 	return (0b01010100 << 24) | (imm & 0b1111111111111111111) << 5 | (cond & 0xF);
 }
 
+a64_t a64_cbzw(a64_reg_t r, i32_t imm19)
+{
+	const a64_t mask = 0b00110100000000000000000000000000;
+	return mask | (imm19 << 5) | r;
+}
+
+a64_t a64_cbz(a64_reg_t r, i32_t imm19)
+{
+	return a64_cbzw(r, imm19) | (1 << 31);
+}
+
+a64_t a64_cbnzw(a64_reg_t r, i32_t imm19)
+{
+	return a64_cbzw(r, imm19) | (1 << 24);
+}
+
+a64_t a64_cbnz(a64_reg_t r, i32_t imm19)
+{
+	return a64_cbz(r, imm19) | (1 << 24);
+}
+
 a64_t a64_br(a64_reg_t r)
 {
 	const a64_t imask = 0b11010110000111110000000000000000;
