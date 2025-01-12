@@ -506,3 +506,13 @@ a64_t a64_simd_movib(a64_simd_q_t q, a64_reg_t dst, u8_t imm8)
 {
 	return a64_simd_movi(q, 0, 14, imm8, dst);
 }
+a64_t a64_simd_umaxp(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t r1, a64_reg_t r2)
+{
+	const a64_t mask = 0b00101110001000001010010000000000;
+	return (size << 22) | (q << 30) | (r2 << 16) | (r1 << 5) | dst | mask;
+}
+a64_t a64_simd_uminp(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t r1, a64_reg_t r2)
+{
+	const a64_t mask = 0b00101110001000001010110000000000;
+	return (size << 22) | (q << 30) | (r2 << 16) | (r1 << 5) | dst | mask;
+}
