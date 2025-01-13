@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../headers/a64_jit.h"
 #include "../headers/a64_ins.h"
+#include "../headers/a64_abbr.h"
 
 /*
 fn:
@@ -28,7 +29,7 @@ int main(int argc, const char *argv[])
 	FILE *out;
 
 	a64_jit_init(&jit, 34);
-	a64_jit_push(&jit, a64_load_store(LOAD, IMM, SZX, 0, R0, R1, 8));
+	a64_jit_push(&jit, LDR(IMM, R0, R1, 8)); //a64_load_store(LOAD, IMM, SZX, 0, R0, R1, 8)
 	a64_jit_push(&jit, a64_load_store(LOAD, IMM, SZW, 0, R0, R1, 4));
 	a64_jit_push(&jit, a64_load_store(LOAD, IMM, SZH, 0, R0, R1, 2));
 	a64_jit_push(&jit, a64_load_store(LOAD, IMM, SZB, 0, R0, R1, 1));

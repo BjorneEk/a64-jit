@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "../headers/a64_jit.h"
 #include "../headers/a64_ins.h"
-
+#include "../headers/a64_abbr.h"
 /*
 fn:
 	mov	w2, #0
@@ -36,18 +36,18 @@ int main(int argc, const char *argv[])
 	FILE *out;
 
 	a64_jit_init(&jit, 34);
-	a64_jit_push(&jit, a64_simd_ld1(LD1_NONE, SIMD_B, SIMD_HALF, 1, R0, R1));
+	a64_jit_push(&jit, LD1B16(LD1_NONE, 1, R0, R1));
 	a64_jit_push(&jit, a64_simd_ld1(LD1_NONE, SIMD_B, SIMD_FULL, 2, R2, R1));
 	a64_jit_push(&jit, a64_simd_ld1(LD1_NONE, SIMD_D, SIMD_HALF, 3, R4, R1));
 	a64_jit_push(&jit, a64_simd_ld1(LD1_NONE, SIMD_S, SIMD_FULL, 4, R5, R1));
 
 	a64_jit_push(&jit, a64_simd_ld1(LD1_IMM, SIMD_B, SIMD_HALF, 1, R0, R1));
-	a64_jit_push(&jit, a64_simd_ld1(LD1_IMM, SIMD_B, SIMD_FULL, 2, R2, R1));
+	a64_jit_push(&jit, LD1B16(LD1_IMM, 2, R2, R1));
 	a64_jit_push(&jit, a64_simd_ld1(LD1_IMM, SIMD_D, SIMD_HALF, 3, R4, R1));
 	a64_jit_push(&jit, a64_simd_ld1(LD1_IMM, SIMD_S, SIMD_FULL, 4, R5, R1));
 
 	a64_jit_push(&jit, a64_simd_ld1(LD1_REG, SIMD_B, SIMD_HALF, 1, R0, R1, R9));
-	a64_jit_push(&jit, a64_simd_ld1(LD1_REG, SIMD_B, SIMD_FULL, 2, R2, R1, R10));
+	a64_jit_push(&jit, LD1B16(LD1_REG, 2, R2, R1, R10));
 	a64_jit_push(&jit, a64_simd_ld1(LD1_REG, SIMD_D, SIMD_HALF, 3, R4, R1, R11));
 	a64_jit_push(&jit, a64_simd_ld1(LD1_REG, SIMD_S, SIMD_FULL, 4, R5, R1, R12));
 	a64_jit_push(&jit, a64_ret());
