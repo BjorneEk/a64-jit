@@ -491,6 +491,24 @@ a64_t a64_simd_cmeq(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t
 	return (size << 22) | (q << 30) | (s2 << 16) | (s1 << 5) | dst | mask;
 }
 
+a64_t a64_simd_cmhi(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t s1, a64_reg_t s2)
+{
+	const a64_t mask = 0b00101110001000000011010000000000;
+	return (size << 22) | (q << 30) | (s2 << 16) | (s1 << 5) | dst | mask;
+}
+
+a64_t a64_simd_cmhs(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t s1, a64_reg_t s2)
+{
+	const a64_t mask = 0b00101110001000000011110000000000;
+	return (size << 22) | (q << 30) | (s2 << 16) | (s1 << 5) | dst | mask;
+}
+
+a64_t a64_simd_not(a64_simd_q_t q, a64_reg_t dst, a64_reg_t r)
+{
+	const a64_t mask = 0b00101110001000000101100000000000;
+	return (q << 30) | (r << 5) | dst | mask;
+}
+
 a64_t a64_simd_umaxv(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_t src)
 {
 	const a64_t mask = 0b00101110001100001010100000000000;

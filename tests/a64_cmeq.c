@@ -41,6 +41,18 @@ int main(int argc, const char *argv[])
 	a64_jit_push(&jit, a64_simd_cmeq(SIMD_D, SIMD_FULL, R0, R1, R2));
 	a64_jit_push(&jit, a64_simd_cmeq(SIMD_B, SIMD_FULL, R0, R1, R2));
 
+	a64_jit_push(&jit, a64_simd_cmhi(SIMD_H, SIMD_HALF, R0, R1, R2));
+	a64_jit_push(&jit, a64_simd_cmhi(SIMD_S, SIMD_HALF, R0, R1, R2));
+	a64_jit_push(&jit, a64_simd_cmhi(SIMD_D, SIMD_FULL, R0, R1, R2));
+	a64_jit_push(&jit, a64_simd_cmhi(SIMD_B, SIMD_FULL, R0, R1, R2));
+
+
+	a64_jit_push(&jit, a64_simd_cmhs(SIMD_H, SIMD_HALF, R0, R1, R2));
+	a64_jit_push(&jit, a64_simd_cmhs(SIMD_S, SIMD_HALF, R0, R1, R2));
+	a64_jit_push(&jit, a64_simd_cmhs(SIMD_D, SIMD_FULL, R0, R1, R2));
+	a64_jit_push(&jit, a64_simd_cmhs(SIMD_B, SIMD_FULL, R0, R1, R2));
+
+
 	a64_jit_push(&jit, a64_ret());
 
 	out = fopen("files/cmeq.bin", "w");
