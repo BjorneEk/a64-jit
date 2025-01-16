@@ -62,24 +62,32 @@
 #define CMP a64_cmp
 #define CMPW a64_cmpw
 
+#define _CAT(x, y) x ## y
+#define _XCAT(x, y) _CAT(x, y)
 
-#define LDR(mode, dst, addr, imm)	a64_load_store(LOAD, mode, SZX, false, dst, addr, imm)
-#define LDRW(mode, dst, addr, imm)	a64_load_store(LOAD, mode, SZW, false, dst, addr, imm)
-#define LDRH(mode, dst, addr, imm)	a64_load_store(LOAD, mode, SZH, false, dst, addr, imm)
-#define LDRB(mode, dst, addr, imm)	a64_load_store(LOAD, mode, SZB, false, dst, addr, imm)
-#define LDRS(mode, dst, addr, imm)	a64_load_store(LOAD, mode, SZX, true, dst, addr, imm)
-#define LDRSW(mode, dst, addr, imm)	a64_load_store(LOAD, mode, SZW, true, dst, addr, imm)
-#define LDRSH(mode, dst, addr, imm)	a64_load_store(LOAD, mode, SZH, true, dst, addr, imm)
-#define LDRSB(mode, dst, addr, imm)	a64_load_store(LOAD, mode, SZB, true, dst, addr, imm)
+#define _OPT_OFF(...) _OPT_OFF_HELPER((__VA_ARGS__) __VA_OPT__(,) , 0)
+#define _OPT_OFF_HELPER(arg, N, ...) _XCAT(_OPT_OFF_ARG, N)(arg)
+#define _OPT_OFF_ARG0(arg) 0
+#define _OPT_OFF_ARG(arg) arg
 
-#define STR(mode, dst, addr, imm)	a64_load_store(STORE, mode, SZX, false, dst, addr, imm)
-#define STRW(mode, dst, addr, imm)	a64_load_store(STORE, mode, SZW, false, dst, addr, imm)
-#define STRH(mode, dst, addr, imm)	a64_load_store(STORE, mode, SZH, false, dst, addr, imm)
-#define STRB(mode, dst, addr, imm)	a64_load_store(STORE, mode, SZB, false, dst, addr, imm)
-#define STRS(mode, dst, addr, imm)	a64_load_store(STORE, mode, SZX, true, dst, addr, imm)
-#define STRSW(mode, dst, addr, imm)	a64_load_store(STORE, mode, SZW, true, dst, addr, imm)
-#define STRSH(mode, dst, addr, imm)	a64_load_store(STORE, mode, SZH, true, dst, addr, imm)
-#define STRSB(mode, dst, addr, imm)	a64_load_store(STORE, mode, SZB, true, dst, addr, imm)
+
+#define LDR(mode, dst, addr, ...)	a64_load_store(LOAD, mode, SZX, false, dst, addr, _OPT_OFF(__VA_ARGS__))
+#define LDRW(mode, dst, addr, ...)	a64_load_store(LOAD, mode, SZW, false, dst, addr, _OPT_OFF(__VA_ARGS__))
+#define LDRH(mode, dst, addr, ...)	a64_load_store(LOAD, mode, SZH, false, dst, addr, _OPT_OFF(__VA_ARGS__))
+#define LDRB(mode, dst, addr, ...)	a64_load_store(LOAD, mode, SZB, false, dst, addr, _OPT_OFF(__VA_ARGS__))
+#define LDRS(mode, dst, addr, ...)	a64_load_store(LOAD, mode, SZX, true, dst, addr, _OPT_OFF(__VA_ARGS__))
+#define LDRSW(mode, dst, addr, ...)	a64_load_store(LOAD, mode, SZW, true, dst, addr, _OPT_OFF(__VA_ARGS__))
+#define LDRSH(mode, dst, addr, ...)	a64_load_store(LOAD, mode, SZH, true, dst, addr, _OPT_OFF(__VA_ARGS__))
+#define LDRSB(mode, dst, addr, ...)	a64_load_store(LOAD, mode, SZB, true, dst, addr, _OPT_OFF(__VA_ARGS__))
+
+#define STR(mode, dst, addr, ...)	a64_load_store(STORE, mode, SZX, false, dst, addr, _OPT_OFF(__VA_ARGS__))
+#define STRW(mode, dst, addr, ...)	a64_load_store(STORE, mode, SZW, false, dst, addr, _OPT_OFF(__VA_ARGS__))
+#define STRH(mode, dst, addr, ...)	a64_load_store(STORE, mode, SZH, false, dst, addr, _OPT_OFF(__VA_ARGS__))
+#define STRB(mode, dst, addr, ...)	a64_load_store(STORE, mode, SZB, false, dst, addr, _OPT_OFF(__VA_ARGS__))
+#define STRS(mode, dst, addr, ...)	a64_load_store(STORE, mode, SZX, true, dst, addr, _OPT_OFF(__VA_ARGS__))
+#define STRSW(mode, dst, addr, ...)	a64_load_store(STORE, mode, SZW, true, dst, addr, _OPT_OFF(__VA_ARGS__))
+#define STRSH(mode, dst, addr, ...)	a64_load_store(STORE, mode, SZH, true, dst, addr, _OPT_OFF(__VA_ARGS__))
+#define STRSB(mode, dst, addr, ...)	a64_load_store(STORE, mode, SZB, true, dst, addr, _OPT_OFF(__VA_ARGS__))
 
 #define RET a64_ret
 #define NOP a64_nop
