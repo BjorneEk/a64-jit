@@ -36,7 +36,7 @@ int main(int argc, const char *argv[])
 	FILE *out;
 
 	a64_jit_init(&jit, 34);
-	a64_jit_push(&jit, LD1B16(LD1_NONE, 1, R0, R1));
+	a64_jit_push(&jit, LD1(V16B, LD1_NONE, 1, R0, R1));
 	a64_jit_push(&jit, a64_simd_ld1(LD1_NONE, SIMD_B, SIMD_FULL, 2, R2, R1));
 	a64_jit_push(&jit, a64_simd_ld1(LD1_NONE, SIMD_D, SIMD_HALF, 3, R4, R1));
 	a64_jit_push(&jit, a64_simd_ld1(LD1_NONE, SIMD_S, SIMD_FULL, 4, R5, R1));

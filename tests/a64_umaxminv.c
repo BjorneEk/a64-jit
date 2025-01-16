@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "../headers/a64_jit.h"
 #include "../headers/a64_ins.h"
-
+#include "../headers/a64_abbr.h"
 /*
 fn:
 	mov	w2, #0
@@ -36,12 +36,12 @@ int main(int argc, const char *argv[])
 	FILE *out;
 
 	a64_jit_init(&jit, 34);
-	a64_jit_push(&jit, a64_simd_umaxv(SIMD_H, SIMD_HALF, R0, R1));
-	a64_jit_push(&jit, a64_simd_umaxv(SIMD_B, SIMD_FULL, R0, R1));
+	a64_jit_push(&jit, SIMD_UMAXV(V4H, R0, R1));
+	a64_jit_push(&jit, SIMD_UMAXV(V16B, R0, R1));
 
-	a64_jit_push(&jit, a64_simd_uminv(SIMD_H, SIMD_FULL, R0, R1));
-	a64_jit_push(&jit, a64_simd_uminv(SIMD_S, SIMD_FULL, R0, R1));
-	a64_jit_push(&jit, a64_simd_uminv(SIMD_B, SIMD_HALF, R0, R1));
+	a64_jit_push(&jit, SIMD_UMAXV(V8H, R0, R1));
+	a64_jit_push(&jit, SIMD_UMINV(V4S, R0, R1));
+	a64_jit_push(&jit, SIMD_UMINV(V8B, R0, R1));
 
 	a64_jit_push(&jit, a64_ret());
 
