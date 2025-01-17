@@ -127,6 +127,21 @@ a64_t a64_subiw(a64_reg_t dst, a64_reg_t src, i32_t imm);
 a64_t a64_addsiw(a64_reg_t dst, a64_reg_t src, i32_t imm);
 a64_t a64_subsiw(a64_reg_t dst, a64_reg_t src, i32_t imm);
 
+#define LOGOPS(X)		\
+	X(and, 0, false)	\
+	X(bic, 0, true)		\
+	X(orr, 1, false)	\
+	X(orn, 1, true)		\
+	X(eor, 2, false)	\
+	X(eon, 2, true)		\
+	X(ands, 3, false)	\
+	X(bics, 3, true)
+
+#define LOGFUNC(name, opcode, negate)											\
+a64_t a64_ ## name (a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm);	\
+a64_t a64_ ## name ## w (a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm);
+LOGOPS(LOGFUNC)
+#undef LOGFUNC
 a64_t a64_adr(a64_reg_t dst, i32_t imm21);
 
 a64_t a64_adc(a64_reg_t dst, a64_reg_t s1, a64_reg_t s2);

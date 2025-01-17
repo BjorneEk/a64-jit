@@ -216,6 +216,25 @@ a64_t a64_adr(a64_reg_t dst, i32_t imm21)
 	return dst | (0x7FFFF & imm21) << 5 | ((0x60000000 & imm21) << 5) | imask;
 }
 
+#define SZ_SH(val, size, shift) (((val) & (size)) << shift)
+static a64_t a64_logop(u32_t sf, u32_t op, u32_t N, a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm)
+{
+	return (5 << 25)		|
+		SZ_SH(sf, 1, 31)	|
+		SZ_SH(op, 3, 29)	|
+		SZ_SH(N, 1, 21)		|
+		SZ_SH(Rm, 0b11111, 16)	|
+		SZ_SH(Rn, 0b11111, 5)	|
+		SZ_SH(Rd, 0b11111, 0);
+}
+
+
+#define LOGFUNC(name, opcode, negate)											\
+a64_t a64_ ## name (a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm) { return a64_logop(1, opcode, negate, Rd, Rn, Rm); }	\
+a64_t a64_ ## name ## w (a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm) { return a64_logop(0, opcode, negate, Rd, Rn, Rm); }
+LOGOPS(LOGFUNC)
+#undef LOGFUNC
+
 static const a64_t ADC_SBC_imask = 0b00011010000000000000000000000000;
 static const a64_t ADD_SUB_imask = 0b00001011000000000000000000000000;
 enum {
@@ -585,3 +604,4 @@ a64_t a64_simd_uminp(a64_simd_sz_t size, a64_simd_q_t q, a64_reg_t dst, a64_reg_
 	const a64_t mask = 0b00101110001000001010110000000000;
 	return (size << 22) | (q << 30) | (r2 << 16) | (r1 << 5) | dst | mask;
 }
+

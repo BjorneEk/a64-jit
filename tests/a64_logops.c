@@ -31,24 +31,7 @@ int main(int argc, const char *argv[])
 	FILE *out;
 
 	a64_jit_init(&jit, 30);
-	a64_jit_push(&jit, a64_adc(R0, R0, R1));
-	a64_jit_push(&jit, a64_adcw(R0, R0, R1));
-	a64_jit_push(&jit, a64_adcs(R0, R0, R1));
-	a64_jit_push(&jit, a64_adcsw(R0, R0, R1));
-	a64_jit_push(&jit, a64_sbc(R0, R0, R1));
-	a64_jit_push(&jit, a64_sbcw(R0, R0, R1));
-	a64_jit_push(&jit, a64_sbcs(R0, R0, R1));
-	a64_jit_push(&jit, a64_sbcsw(R0, R0, R1));
-	a64_jit_push(&jit, a64_add(R0, R0, R1));
-	a64_jit_push(&jit, a64_addw(R0, R0, R1));
-	a64_jit_push(&jit, a64_adds(R0, R0, R1));
-	a64_jit_push(&jit, a64_addsw(R0, R0, R1));
-	a64_jit_push(&jit, a64_sub(R0, R0, R1));
-	a64_jit_push(&jit, a64_subw(R0, R0, R1));
-	a64_jit_push(&jit, a64_subs(R0, R0, R1));
-	a64_jit_push(&jit, a64_subsw(R0, R0, R1));
-	a64_jit_push(&jit, a64_cmp(R0, R1));
-	a64_jit_push(&jit, a64_cmpw(R0, R1));
+
 	a64_jit_push(&jit, a64_addi(R0, R0, 10));
 	a64_jit_push(&jit, a64_addsi(R0, R0, 10));
 	a64_jit_push(&jit, a64_subi(R0, R0, 10));
@@ -66,7 +49,7 @@ int main(int argc, const char *argv[])
 
 
 
-	out = fopen("files/add.bin", "w");
+	out = fopen("files/logop.bin", "w");
 	a64_write_bin(out, &jit);
 	fclose(out);
 
