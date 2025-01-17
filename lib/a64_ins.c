@@ -173,6 +173,15 @@ a64_t a64_subi(a64_reg_t dst, a64_reg_t src, i32_t imm)
 	const a64_t imask	= 0b11010001000000000000000000000000;
 	return (src << 5) | dst | a64_imm(imm) | imask;
 }
+a64_t a64_addsi(a64_reg_t dst, a64_reg_t src, i32_t imm)
+{
+	return a64_addi(dst, src, imm) | (1 << 29);
+}
+
+a64_t a64_subsi(a64_reg_t dst, a64_reg_t src, i32_t imm)
+{
+	return a64_subi(dst, src, imm) | (1 << 29);
+}
 
 a64_t a64_adr(a64_reg_t dst, i32_t imm21)
 {

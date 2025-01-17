@@ -40,6 +40,10 @@
 
 #define ADDI a64_addi
 #define SUBI a64_subi
+
+#define ADDSI a64_addsi
+#define SUBSI a64_subsi
+
 #define ADR a64_adr
 
 #define ADC a64_adc

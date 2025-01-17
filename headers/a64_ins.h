@@ -119,8 +119,8 @@ a64_t a64_moviw(a64_reg_t dst, u64_t imm);
 
 a64_t a64_addi(a64_reg_t dst, a64_reg_t src, i32_t imm);
 a64_t a64_subi(a64_reg_t dst, a64_reg_t src, i32_t imm);
-
-
+a64_t a64_addsi(a64_reg_t dst, a64_reg_t src, i32_t imm);
+a64_t a64_subsi(a64_reg_t dst, a64_reg_t src, i32_t imm);
 
 a64_t a64_adr(a64_reg_t dst, i32_t imm21);
 
@@ -179,6 +179,7 @@ typedef enum a64_simd_optype {
 	V8H,
 	V2S,
 	V4S,
+	V1D,
 	V2D
 } a64_simd_optype_t;
 
