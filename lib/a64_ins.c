@@ -238,7 +238,20 @@ static a64_t a64_logop(u32_t sf, u32_t op, u32_t N, a64_reg_t Rd, a64_reg_t Rn, 
 		SZ_SH(Rd, 0b11111, 0);
 }
 
+#define DP2OPS(X)		\
+	X(udiv, 0, 0b000010)	\
+	X(sdiv, 0, 0b000011)
 
+static a64_t a64_dp2s(u32_t sf, u32_t S, u32_t op, a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm)
+{
+	return (0b1101011 << 22)	|
+		SZ_SH(sf, 1, 31)	|
+		SZ_SH(op, 0b111111, 10)	|
+		SZ_SH(S, 1, 29)		|
+		SZ_SH(Rm, 0b11111, 16)	|
+		SZ_SH(Rn, 0b11111, 5)	|
+		SZ_SH(Rd, 0b11111, 0);
+}
 
 #define LOGFUNC(name, opcode, negate)											\
 a64_t a64_ ## name (a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm) { return a64_logop(1, opcode, negate, Rd, Rn, Rm); }	\
@@ -246,6 +259,12 @@ a64_t a64_ ## name ## w (a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm) { return a64_
 LOGOPS(LOGFUNC)
 #undef LOGFUNC
 
+#define D2FUNC(name, S, op)											\
+a64_t a64_ ## name (a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm) { return a64_dp2s(1, S, op, Rd, Rn, Rm); }	\
+a64_t a64_ ## name ## w (a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm) { return a64_dp2s(0, S, op, Rd, Rn, Rm); }
+
+DP2OPS(D2FUNC)
+#undef D2FUNC
 
 static const a64_t ADC_SBC_imask = 0b00011010000000000000000000000000;
 static const a64_t ADD_SUB_imask = 0b00001011000000000000000000000000;

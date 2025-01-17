@@ -76,6 +76,11 @@ int main(int argc, const char *argv[])
 	a64_jit_push(&jit, a64_andsw(R0, R0, R1));
 	a64_jit_push(&jit, a64_bicsw(R0, R0, R1));
 
+	a64_jit_push(&jit, a64_udiv(R7, R7, R9));
+	a64_jit_push(&jit, a64_udivw(R7, R7, R9));
+	a64_jit_push(&jit, a64_sdiv(R7, R7, R9));
+	a64_jit_push(&jit, a64_sdivw(R7, R7, R9));
+
 	a64_jit_push(&jit, a64_ret());
 
 

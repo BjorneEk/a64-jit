@@ -146,6 +146,12 @@ a64_t a64_eonw(a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm);
 a64_t a64_andsw(a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm);
 a64_t a64_bicsw(a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm);
 
+
+a64_t a64_udiv(a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm);
+a64_t a64_udivw(a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm);
+a64_t a64_sdiv(a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm);
+a64_t a64_sdivw(a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm);
+
 a64_t a64_adr(a64_reg_t dst, i32_t imm21);
 
 a64_t a64_adc(a64_reg_t dst, a64_reg_t s1, a64_reg_t s2);
