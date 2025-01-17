@@ -57,11 +57,25 @@ int main(int argc, const char *argv[])
 	a64_jit_push(&jit, a64_addsiw(R0, R0, 10));
 	a64_jit_push(&jit, a64_subiw(R0, R0, 10));
 	a64_jit_push(&jit, a64_subsiw(R0, R0, 10));
-	#define LOGFUNC(name, opcode, negate)		\
-	a64_jit_push(&jit, a64_ ## name (R0, R0, R1));	\
-	a64_jit_push(&jit, a64_ ## name ## w (R0, R0, R1));
-	LOGOPS(LOGFUNC)
-	#undef LOGFUNC
+
+	a64_jit_push(&jit, a64_and(R0, R0, R1));
+	a64_jit_push(&jit, a64_bic(R0, R0, R1));
+	a64_jit_push(&jit, a64_orr(R0, R0, R1));
+	a64_jit_push(&jit, a64_orn(R0, R0, R1));
+	a64_jit_push(&jit, a64_eor(R0, R0, R1));
+	a64_jit_push(&jit, a64_eon(R0, R0, R1));
+	a64_jit_push(&jit, a64_ands(R0, R0, R1));
+	a64_jit_push(&jit, a64_bics(R0, R0, R1));
+
+	a64_jit_push(&jit, a64_andw(R0, R0, R1));
+	a64_jit_push(&jit, a64_bicw(R0, R0, R1));
+	a64_jit_push(&jit, a64_orrw(R0, R0, R1));
+	a64_jit_push(&jit, a64_ornw(R0, R0, R1));
+	a64_jit_push(&jit, a64_eorw(R0, R0, R1));
+	a64_jit_push(&jit, a64_eonw(R0, R0, R1));
+	a64_jit_push(&jit, a64_andsw(R0, R0, R1));
+	a64_jit_push(&jit, a64_bicsw(R0, R0, R1));
+
 	a64_jit_push(&jit, a64_ret());
 
 

@@ -215,6 +215,16 @@ a64_t a64_adr(a64_reg_t dst, i32_t imm21)
 
 	return dst | (0x7FFFF & imm21) << 5 | ((0x60000000 & imm21) << 5) | imask;
 }
+#define LOGOPS(X)		\
+	X(and, 0, false)	\
+	X(bic, 0, true)		\
+	X(orr, 1, false)	\
+	X(orn, 1, true)		\
+	X(eor, 2, false)	\
+	X(eon, 2, true)		\
+	X(ands, 3, false)	\
+	X(bics, 3, true)
+
 
 #define SZ_SH(val, size, shift) (((val) & (size)) << shift)
 static a64_t a64_logop(u32_t sf, u32_t op, u32_t N, a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm)
@@ -229,11 +239,13 @@ static a64_t a64_logop(u32_t sf, u32_t op, u32_t N, a64_reg_t Rd, a64_reg_t Rn, 
 }
 
 
+
 #define LOGFUNC(name, opcode, negate)											\
 a64_t a64_ ## name (a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm) { return a64_logop(1, opcode, negate, Rd, Rn, Rm); }	\
 a64_t a64_ ## name ## w (a64_reg_t Rd, a64_reg_t Rn, a64_reg_t Rm) { return a64_logop(0, opcode, negate, Rd, Rn, Rm); }
 LOGOPS(LOGFUNC)
 #undef LOGFUNC
+
 
 static const a64_t ADC_SBC_imask = 0b00011010000000000000000000000000;
 static const a64_t ADD_SUB_imask = 0b00001011000000000000000000000000;
