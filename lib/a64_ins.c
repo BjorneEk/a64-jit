@@ -183,6 +183,27 @@ a64_t a64_subsi(a64_reg_t dst, a64_reg_t src, i32_t imm)
 	return a64_subi(dst, src, imm) | (1 << 29);
 }
 
+a64_t a64_addiw(a64_reg_t dst, a64_reg_t src, i32_t imm)
+{
+	return a64_addi(dst, src, imm) & ~(1 << 31);
+}
+
+a64_t a64_subiw(a64_reg_t dst, a64_reg_t src, i32_t imm)
+{
+	return a64_subi(dst, src, imm) & ~(1 << 31);
+}
+
+a64_t a64_addsiw(a64_reg_t dst, a64_reg_t src, i32_t imm)
+{
+	return a64_addsi(dst, src, imm) & ~(1 << 31);
+}
+
+a64_t a64_subsiw(a64_reg_t dst, a64_reg_t src, i32_t imm)
+{
+	return a64_subsi(dst, src, imm) & ~(1 << 31);
+}
+
+
 a64_t a64_adr(a64_reg_t dst, i32_t imm21)
 {
 	const a64_t imask	= 0b00010000000000000000000000000000;

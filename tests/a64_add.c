@@ -53,6 +53,10 @@ int main(int argc, const char *argv[])
 	a64_jit_push(&jit, a64_addsi(R0, R0, 10));
 	a64_jit_push(&jit, a64_subi(R0, R0, 10));
 	a64_jit_push(&jit, a64_subsi(R0, R0, 10));
+	a64_jit_push(&jit, a64_addiw(R0, R0, 10));
+	a64_jit_push(&jit, a64_addsiw(R0, R0, 10));
+	a64_jit_push(&jit, a64_subiw(R0, R0, 10));
+	a64_jit_push(&jit, a64_subsiw(R0, R0, 10));
 	a64_jit_push(&jit, a64_ret());
 
 

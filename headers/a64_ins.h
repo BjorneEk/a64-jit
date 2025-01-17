@@ -122,6 +122,11 @@ a64_t a64_subi(a64_reg_t dst, a64_reg_t src, i32_t imm);
 a64_t a64_addsi(a64_reg_t dst, a64_reg_t src, i32_t imm);
 a64_t a64_subsi(a64_reg_t dst, a64_reg_t src, i32_t imm);
 
+a64_t a64_addiw(a64_reg_t dst, a64_reg_t src, i32_t imm);
+a64_t a64_subiw(a64_reg_t dst, a64_reg_t src, i32_t imm);
+a64_t a64_addsiw(a64_reg_t dst, a64_reg_t src, i32_t imm);
+a64_t a64_subsiw(a64_reg_t dst, a64_reg_t src, i32_t imm);
+
 a64_t a64_adr(a64_reg_t dst, i32_t imm21);
 
 a64_t a64_adc(a64_reg_t dst, a64_reg_t s1, a64_reg_t s2);
